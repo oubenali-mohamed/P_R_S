@@ -3,10 +3,13 @@ import NavLeft from '../NavLeft'
 import { useDispatch, useSelector } from 'react-redux'
 import UploadImg from './UploadImg'
 import { updateBio } from '../../actions/user.actions';
+import { dateParse } from '../utils';
 function UpdateProfil() {
   const [bio, setBio] = useState("");
   const [updateForm, setUpdateForm] = useState(false);
   const userData = useSelector((state) => state.userReducer)
+  const [followersPopup, setFollowersPopup] = useState(false);
+  const [followingPopup, setFollowingPopup] = useState(false);
   const dispatch = useDispatch();
 
   const handleUpdate = () => {
@@ -46,9 +49,27 @@ function UpdateProfil() {
               </>
             )}
           </div>
-         <h4>Menbre depuis le : {userData.createdAt}</h4>
+         <h4>Menbre depuis le : {dateParse(userData.createdAt)}</h4>
+         <h5 onClick={()=> setFollowingPopup(true)}> Abonnement : {userData.following ? userData.following.length : ""}</h5>
+         <h5 onClick={()=> setFollowersPopup(true)}>Abonnés : {userData.followers ? userData.followers.length : ""}</h5>
         </div>
       </div>
+      {followingPopup && (
+      <div className="popup-profil-container">
+        <div className="modal">
+          <h3>Abonnements</h3>
+          <span className="cross" onClick={()=> setFollowingPopup(false)}>
+            &#10005;
+          </span>
+          <ul>
+            {userData.following.map((user) => (
+              <li key={user._id}>{user.username}</li>
+            ))}
+          </ul>
+        </div>
+        </div>
+      )}
+      
     </div>
   )
 }
