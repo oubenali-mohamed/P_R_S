@@ -1,37 +1,42 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { isEmpty } from '../utils'
+import { followUser, unFollowUser } from '../../actions/user.actions'
 
-function FollowHandler({ idToFollow }) {
+function FollowHandler({ idToFollow, type }) {
   const userData = useSelector((state) => state.userReducer)
-  const [isFollowing, setIsFollowing] = useState(false)
-
-  /* const handleFollow = () => {
-    
+  const [isFollowed, setIsFollowed] = useState(false)
+  const dispatch = useDispatch()
+  const handleFollow = () => {
+    dispatch(followUser(userData._id, idToFollow))
+    setIsFollowed(true)
   }
 
   const handleUnFollow = () => {
-    
-  } */
+    dispatch(unFollowUser(userData._id, idToFollow))
+    setIsFollowed(false)
+  }
   useEffect(() => {
     if (!isEmpty(userData.following)) {
       if (userData.following.includes(idToFollow)) {
-        setIsFollowing(true)
+        setIsFollowed(true)
       } else {
-        setIsFollowing(false)
+        setIsFollowed(false)
       }
     }
   }, [userData, idToFollow])
   return (
     <>
-      {isFollowing && (
-        <span>
-          <button className="unfollow-btn">Abonné</button>
+      {isFollowed && !isEmpty(userData) && (
+        <span onClick={handleUnFollow}>
+          {type === "suggestion" && <button className="unfollow-btn">Abonné</button>}
+          {type === "card" && <img src="./img/icons/checked.svg" alt="checked" />}
         </span>
       )}
-      {isFollowing === false && (
-        <span>
-          <button className="follow-btn">Suivre</button>
+      {isFollowed === false && !isEmpty(userData) && (
+        <span onClick={handleFollow}>
+         {type === "suggestion" && <button className="follow-btn">Suivre</button>}
+          {type === "card" && <img src="./img/icons/check.svg" alt="check" />}
         </span>
       )}
     </>
