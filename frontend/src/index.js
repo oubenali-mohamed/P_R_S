@@ -19,6 +19,7 @@ const store = createStore(
 )
 
 store.dispatch(getUsers());
+
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <StrictMode>
