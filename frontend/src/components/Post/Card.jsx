@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { dateParse, isEmpty } from '../utils'
@@ -25,6 +24,9 @@ function Card({ post }) {
                 usersData
                   .map((user) => {
                     if (user._id === post.posterId) return user.picture
+                    else {
+                      return null
+                    }
                   })
                   .join('')
               }
@@ -39,6 +41,9 @@ function Card({ post }) {
                     usersData
                       .map((user) => {
                         if (user._id === post.posterId) return user.username
+                        else {
+                          return null
+                        }
                       })
                       .join('')}
                 </h3>
@@ -67,7 +72,9 @@ function Card({ post }) {
                 <img src="./img/icons/message1.svg" alt="comment" />
                 <span>{post.comments.length}</span>
               </div>
-              <h3><LikeButton post={post}/></h3>
+              <h3>
+                <LikeButton post={post} />
+              </h3>
               <img src="./img/icons/share.svg" alt="share" />
             </div>
           </div>

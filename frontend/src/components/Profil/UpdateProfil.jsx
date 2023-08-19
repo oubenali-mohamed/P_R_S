@@ -1,5 +1,3 @@
-/* eslint-disable array-callback-return */
-
 import React, { useState } from 'react'
 import NavLeft from '../NavLeft'
 import { useDispatch, useSelector } from 'react-redux'
@@ -79,12 +77,16 @@ function UpdateProfil() {
                         <img src={user.picture} alt="user pict" />
                         <h4>{user.username}</h4>
                         <div className="follow-handler">
-                          <FollowHandler idToFollow={user._id} type={"suggestion"}/>
+                          <FollowHandler
+                            idToFollow={user._id}
+                            type={'suggestion'}
+                          />
                         </div>
                       </li>
                     )
                   }
                 }
+                return null
               })}
             </ul>
           </div>
@@ -106,12 +108,16 @@ function UpdateProfil() {
                         <img src={user.picture} alt="user pict" />
                         <h4>{user.username}</h4>
                         <div className="follow-handler">
-                          <FollowHandler idToFollow={user._id} type={"suggestion"} />
+                          <FollowHandler
+                            idToFollow={user._id}
+                            type={'suggestion'}
+                          />
                         </div>
                       </li>
                     )
                   }
                 }
+                return null
               })}
             </ul>
           </div>
